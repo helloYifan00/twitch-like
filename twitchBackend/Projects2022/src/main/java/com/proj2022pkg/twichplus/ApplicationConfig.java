@@ -12,26 +12,25 @@ import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
-public class ApplicationConfig { // sessionfaocty是singleton
-    @Bean(name = "sessionFactory") // 這裡的session和authentication的session不同!!
-    public LocalSessionFactoryBean sessionFactory() { // 通過sessionFactory來和數據庫交互(增刪查改)
+public class ApplicationConfig { 
+    @Bean(name = "sessionFactory") 
+    public LocalSessionFactoryBean sessionFactory() { 
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         // make sure you add your own package name if your class is not under com.laioffer.jupiter.entity.db
         sessionFactory.setPackagesToScan("com.proj2022pkg.twichplus.entity.db");
         sessionFactory.setHibernateProperties(hibernateProperties());
-        return sessionFactory; // 得到這個數據庫session
-    }
+        return sessionFactory; 
 
-    @Bean(name = "dataSource") // 指向AWS的數據庫
+    @Bean(name = "dataSource") 
     public DataSource dataSource() {
         String RDS_ENDPOINT = "twitch.XXXXXXXXXX.rds.amazonaws.com";
         String USERNAME = "XXX";
         String PASSWORD = "XXXX";
-        //需要修改红色部分, 保留其他内容,  YOUR_RDS_INSTANCE_ADDRESS,USERNAME,  PASSWORD are information created last lesson
+ 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://" + RDS_ENDPOINT + ":3306/twitch?createDatabaseIfNotExist=true&serverTimezone=UTC");
+        dataSource.setUrl("jdbc:mysql://" + RDS_ENDPOINT + ":XXXX/twitch?createDatabaseIfNotExist=true&serverTimezone=UTC");
         dataSource.setUsername(USERNAME);
         dataSource.setPassword(PASSWORD);
 
