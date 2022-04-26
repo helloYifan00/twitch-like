@@ -8,24 +8,24 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.PersistenceException;
 
-@Repository // 也是一個component，表示這個class跟data base 儲存相關
+@Repository 
 public class RegisterDao {
 
     @Autowired
-    private SessionFactory sessionFactory; // 看ApplicationConfig
+    private SessionFactory sessionFactory; 
 
     public boolean register(User user) {
         Session session = null;
 
         try {
             session = sessionFactory.openSession();
-            session.beginTransaction(); // mySQL才有Transaction的概念 : 多個對數據庫的操作，要嘛都成功不然都失敗
+            session.beginTransaction(); 
             session.save(user);
             session.getTransaction().commit();
-        } catch (PersistenceException | IllegalStateException ex) { // commit之後可能發生的異常，看EntityTransaction.java
-            // if hibernate throws this exception, it means the user already be register
+        } catch (PersistenceException | IllegalStateException ex) {
+            
             ex.printStackTrace();
-            session.getTransaction().rollback(); // rollback到register前的狀態(刪除之前的操作)
+            session.getTransaction().rollback(); 
             return false;
         } finally {
             if (session != null) session.close();
@@ -33,5 +33,3 @@ public class RegisterDao {
         return true;
     }
 }
-
-
