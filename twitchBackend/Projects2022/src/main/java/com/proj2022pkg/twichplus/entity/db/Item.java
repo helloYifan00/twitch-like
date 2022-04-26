@@ -17,7 +17,7 @@ public class Item implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @JsonProperty("id") //透過Jackson, 把JSON item 轉成 Java 的item (跟hibernate無關)
+    @JsonProperty("id") 
     private String id;
 
     @JsonProperty("title")
@@ -44,7 +44,7 @@ public class Item implements Serializable {
     private ItemType type;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "itemSet") // 只要有一邊table創 JoinTable 即可，這邊就設mappedBy
+    @ManyToMany(mappedBy = "itemSet") 
     private Set<User> users= new HashSet<>();
 
     public Set<User> getUsers() {
