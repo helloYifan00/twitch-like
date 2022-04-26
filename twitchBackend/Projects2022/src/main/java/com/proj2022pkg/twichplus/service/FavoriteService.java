@@ -14,7 +14,7 @@ public class FavoriteService {
     @Autowired
     private FavoriteDao favoriteDao;
 
-    public void setFavoriteItem(String userId, Item item) { // Item從controller來的
+    public void setFavoriteItem(String userId, Item item) { 
         favoriteDao.setFavoriteItem(userId, item);
     }
 
@@ -22,11 +22,7 @@ public class FavoriteService {
         favoriteDao.unsetFavoriteItem(userId, itemId);
     }
 
-    /*
-    user 增加favorite時是隨機的，所以要先去分類favorite_record表裡有哪些item type(VIDEO, STREAM, CLIP)
-    所以需要用map，將item type作為key，包成一個value(為一個Lite<Item>)，
-    各種item type的List<Item>就成為一個Item map
-    * */
+  
     public Map<String, List<Item>> getFavoriteItems(String userId) {
         Map<String, List<Item>> itemMap = new HashMap<>();
         for (ItemType type : ItemType.values()) {
