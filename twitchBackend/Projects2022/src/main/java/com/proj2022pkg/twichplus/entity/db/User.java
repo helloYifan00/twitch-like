@@ -35,7 +35,7 @@ public class User implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "favorite_records",
                joinColumns = { @JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "item_id")})
-    Set<Item> itemSet = new HashSet<>(); // 先定義一個set
+    Set<Item> itemSet = new HashSet<>(); 
 
     public Set<Item> getItemSet() {
         return itemSet;
