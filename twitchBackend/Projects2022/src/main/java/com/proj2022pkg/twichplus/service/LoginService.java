@@ -13,7 +13,7 @@ public class LoginService {
     private LoginDao loginDao;
 
     public String verifyLogin(String userId, String password) throws IOException {
-        password = Util.encryptPassword(userId, password);  // 加密
+        password = Util.encryptPassword(userId, password);  
         return loginDao.verifyLogin(userId, password);
     }
 }
