@@ -17,7 +17,6 @@ public class ApplicationConfig {
     public LocalSessionFactoryBean sessionFactory() { 
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        // make sure you add your own package name if your class is not under com.laioffer.jupiter.entity.db
         sessionFactory.setPackagesToScan("com.proj2022pkg.twichplus.entity.db");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory; 
