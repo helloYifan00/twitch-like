@@ -8,7 +8,7 @@ public class LoginRequestBody {
     private final String userId;
     private final String password;
 
-    @JsonCreator // 用來deserialization，JSON String 轉成 具體的class
+    @JsonCreator
     public LoginRequestBody(@JsonProperty("user_id") String userId, @JsonProperty("password") String password) {
         this.userId = userId;
         this.password = password;
