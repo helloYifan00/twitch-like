@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 
-@Service // business logic object都是藉由這個annotation來讓Spring來創建
+@Service 
 public class RegisterService {
 
     @Autowired
