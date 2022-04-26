@@ -11,19 +11,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Controller // HTTPservlet藉由這個annotation來發請求
+@Controller 
 public class RegisterController {
 
     @Autowired
     private RegisterService registerService;
-    //RequestMapping : 把前端發送的URL mapping到這個method來處理
+    
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public void register(@RequestBody User user, HttpServletResponse response) throws IOException {
-                          // @RequestBody : 將JSON string格式 轉成 userbody格式
-        if (!registerService.register(user)) { // 檢查是否註冊成功
+                         
+        if (!registerService.register(user)) { 
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-//            response.getWriter().print("Fail to register"); // 可以自己加錯誤原因
+//            response.getWriter().print("Fail to register"); 
         }
     }
 }
-
