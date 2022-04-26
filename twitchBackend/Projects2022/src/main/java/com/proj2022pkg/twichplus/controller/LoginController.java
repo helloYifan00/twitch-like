@@ -23,17 +23,15 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public void login(@RequestBody LoginRequestBody requestBody, HttpServletRequest request, HttpServletResponse response) throws IOException {
-                                                              //透過HttpServletRequest的方法來得到session id(根據cookie找到session id)
         String firstname = loginService.verifyLogin(requestBody.getUserId(), requestBody.getPassword());
 
-        // Create a new session for the user if user ID and password are correct, otherwise return Unauthorized error.
         if (!firstname.isEmpty()) {
             // Create a new session, put user ID as an attribute into the session object, and set the expiration time to 600 seconds.
-            HttpSession session = request.getSession(); // 和hibernate的session不同，不要搞混
-            // session可以存各種個性化設置
-            session.setAttribute("user_id", requestBody.getUserId()); // key : value = string : Object
-            session.setMaxInactiveInterval(600); // 设定session的有效期为600 sec
+            HttpSession session = request.getSession(); 
 
+            session.setAttribute("user_id", requestBody.getUserId()); // key : value = string : Object
+            session.setMaxInactiveInterval(600);
+            
             LoginResponseBody loginResponseBody = new LoginResponseBody(requestBody.getUserId(), firstname);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().print(new ObjectMapper().writeValueAsString(loginResponseBody));
