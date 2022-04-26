@@ -19,7 +19,7 @@ import com.proj2022pkg.twichplus.entity.db.ItemType;
 @Repository
 public class FavoriteDao {
     @Autowired
-    private SessionFactory sessionFactory; // 用來創建session object，以提供增刪查改的API
+    private SessionFactory sessionFactory; 
 
     // Insert a favorite record to the database
     public void setFavoriteItem(String userId, Item item) {
@@ -28,10 +28,10 @@ public class FavoriteDao {
         try {
             session = sessionFactory.openSession();
             User user = session.get(User.class, userId);
-            // .class意思是找到User這個表中有沒有指定的userId的紀錄，導出這項紀錄(為一個object)
+
             user.getItemSet().add(item);
             session.beginTransaction();
-            session.save(user); // 測試update()是否也可以
+            session.save(user);
             session.getTransaction().commit();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -41,19 +41,16 @@ public class FavoriteDao {
         }
     }
 
-    // Remove a favorite record from the database
-    // 因為是N:N的關係，只能刪除針對這個user所對應的itemId，不能刪掉該Item，(因為其他user也可能like這個item)
-    public void unsetFavoriteItem(String userId, String itemId) { // 只需要傳itemId就可
+   
+    public void unsetFavoriteItem(String userId, String itemId) { 
         Session session = null;
 
         try {
             session = sessionFactory.openSession();
             User user = session.get(User.class, userId);
             Item item = session.get(Item.class, itemId);
-            user.getItemSet().remove(item); // 只刪了favorite_records表中的這個userId+itemId所對應的的紀錄
-            // 因為User class裡有寫@ManyToMany、@JoinTable，
-            // 所以會去找到favorite_records表的user_id + item_id兩個field找到對應資料，然後刪除這個favorite_records表中的這項紀錄
-
+            user.getItemSet().remove(item); 
+           
             session.beginTransaction();
             session.update(user);
             session.getTransaction().commit();
@@ -76,7 +73,7 @@ public class FavoriteDao {
 
     /* ------------- Recommendation ------------- */
     // Get favorite item ids for the given user
-    public Set<String> getFavoriteItemIds(String userId) { // 順便去重??
+    public Set<String> getFavoriteItemIds(String userId) {
         Set<String> itemIds = new HashSet<>();
 
         try (Session session = sessionFactory.openSession()) {
@@ -101,8 +98,8 @@ public class FavoriteDao {
 
         try (Session session = sessionFactory.openSession()) {
             for(String itemId : favoriteItemIds) {
-                Item item = session.get(Item.class, itemId); // 根據itemId找到item
-                itemMap.get(item.getType().toString()).add(item.getGameId()); // 再由該item，找到type和gameId
+                Item item = session.get(Item.class, itemId); 
+                itemMap.get(item.getType().toString()).add(item.getGameId()); 
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -111,5 +108,3 @@ public class FavoriteDao {
     }
 
 }
-
-
