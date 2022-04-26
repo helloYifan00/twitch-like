@@ -24,11 +24,11 @@ public class RecommendationController {
     @RequestMapping(value = "/recommendation", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, List<Item>> recommendation(HttpServletRequest request) throws ServletException {
-                                  // Rest API    // HttpServletRequest 用來創session，根據session是否為null，來看要怎麼推薦(by default 或by user)
-        HttpSession session = request.getSession(false); // 記得設false，若是沒登入過的user才會將session設為null
+                                  
+        HttpSession session = request.getSession(false); 
         Map<String, List<Item>> itemMap;
         try {
-            if (session == null) { // session沒有存在過(i.e. user沒登入過)
+            if (session == null) {
                 itemMap = recommendationService.recommendItemsByDefault();
             } else {
                 String userId = (String) request.getSession().getAttribute("user_id");
